@@ -14,6 +14,10 @@ def hello():
 
 @app.route("/hooks/<hook>",methods=['GET', 'POST'])
 def bla(hook):
+        event = request.headers.get('X-Event-Key')
+        if(event == "issue:created"):
+            issueCreated(request)
+        elif(event == "repo:push")
         data = Json(request.get_json())
 
         repo = data.repository.full_name
