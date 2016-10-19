@@ -1,0 +1,2 @@
+[{{data.repository.full_name}}] Issue created by {{data.issue.reporter.username}}
+#{{data.issue.id}}: {{issue.title}}
