@@ -23,6 +23,7 @@ def bla(hook):
         if(os.path.exists(template_file)):
             template = Template(open(template_file, 'r').read())
 	    data = Json(request.get_json())
+            print(template_file)
 	    output = template.render(data=data)
             submitHook("https://platform.etv.tudelft.nl/hooks/%s" % hook, output)
             return "Done"
