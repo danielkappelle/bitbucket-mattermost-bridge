@@ -3,9 +3,12 @@ import json
 import requests
 from flask import Flask, request
 from pyxtension.Json import Json
+from jinja2 import Template
 app = Flask(__name__)
 
 webhook_url = "https://platform.etv.tudelft.nl/hooks/"
+template_file = "templates/repo-push"
+template = Template(open(template_file, 'r').read())
 
 
 @app.route("/")
@@ -14,25 +17,15 @@ def hello():
 
 @app.route("/hooks/<hook>",methods=['GET', 'POST'])
 def bla(hook):
-        event = request.headers.get('X-Event-Key')
-        if(event == "issue:created"):
-            issueCreated(request)
-        elif(event == "repo:push")
-        data = Json(request.get_json())
+        # event = request.headers.get('X-Event-Key')
+        # if(event == "issue:created"):
+        #     issueCreated(request)
+        # elif(event == "repo:push")
+	data = Json(request.get_json())
 
-        repo = data.repository.full_name
-        branch = data.push.changes[0].new.name
-        commits = data.push.changes[0].commits
-        actor = data.actor.username
-        output = "[%s/%s] %d commits pushed by %s" % (repo, branch, len(commits), actor)
-        for commit in commits:
-            commithash = commit.hash
-            link = commit.links.html.href
-            author = commit.author.user.username
-            message = commit.message.strip()
-            output += "\n"
-            output += "- [%s](%s) %s - %s" % (commithash[:7], link, message, author)
-        # print(output)
+	output = template.render(data=data)
+	print(output)
+
         submitHook("https://platform.etv.tudelft.nl/hooks/%s" % hook, output)
         return "hoi"
 
