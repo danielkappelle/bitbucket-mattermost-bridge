@@ -42,8 +42,8 @@ author  "Daniel Kappelle <daniel.kappelle@gmail.com>"
 start on runlevel [234]
 stop on runlevel [0156]
 
-chdir /home/daniel/programming/bitbucket-mattermost-bridge/
-exec python /home/daniel/programming/bitbucket-mattermost-bridge/bridge.py
+chdir /path/to/bitbucket-mattermost-bridge/
+exec python /path/to/bitbucket-mattermost-bridge/bridge.py
 respawn
 ```
 
