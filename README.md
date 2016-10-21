@@ -12,7 +12,9 @@ This installation guide is based on `Ubuntu 14.04` with `Python 2.7` and `pip` i
 
 ## Edit config
 Copy the config sample and edit
+
 `$ cp config.py.sample config.py`
+
 `$ vim config.py` or `$ nano config.py` (or whatever editor you prefer)
 
 Enter your hostname, port and the url to the mattermost instance
@@ -20,6 +22,7 @@ Enter your hostname, port and the url to the mattermost instance
 ## Run the bridge
 ### Directly
 This can be useful for debugging
+
 `$ python bridge.py`
 
 ### As a daemon
