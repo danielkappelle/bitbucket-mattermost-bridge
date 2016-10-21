@@ -1,0 +1,5 @@
+# Config file, please set the following settings:
+
+host = "danielkappelle.com"
+port = 3030
+webhook_url = "https://platform.etv.tudelft.nl/hooks/"
