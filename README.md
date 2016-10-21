@@ -48,6 +48,7 @@ respawn
 ```
 
 You can now start/stop/restart the daemon using
+
 `$ sudo start|stop|restart bitbucket-mattermost-bridge`
 
 # Trouble
