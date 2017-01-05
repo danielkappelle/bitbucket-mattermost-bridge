@@ -32,10 +32,9 @@ def issue_created(data):
     resp = set_author_infos(resp, data)
 
     issue = data.issue
-    template = 'Opened a %s %s [#%s: %s](%s) (%s):\n> %s'
+    template = 'Opened a %s %s [#%s: %s](%s) (%s)'
     resp['text'] = template % (issue.priority, issue.type, issue.id,
-                               issue.title, issue.links.html.href, issue.state,
-                               issue.content.raw)
+                               issue.title, issue.links.html.href, issue.state)
 
     resp['color'] = _get_color_from_priority(issue.priority)
     return resp
@@ -45,10 +44,9 @@ def issue_updated(data):
     resp = set_author_infos(resp, data)
 
     issue = data.issue
-    template = 'Updated a %s %s [#%s: %s](%s) (%s):\n> %s'
+    template = 'Updated a %s %s [#%s: %s](%s) (%s)'
     resp['text'] = template % (issue.priority, issue.type, issue.id,
-                               issue.title, issue.links.html.href, issue.state,
-                               issue.content.raw)
+                               issue.title, issue.links.html.href, issue.state)
 
     resp['color'] = _get_color_from_priority(issue.priority)
     return resp
