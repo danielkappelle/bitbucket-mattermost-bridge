@@ -28,6 +28,23 @@ def issue_created(data):
                                                         issue.links.html.href,
                                                         issue.content.raw)
 
+    resp['fields'] = [
+        {
+            'short': True,
+            'title': 'Type',
+            'value': issue.type
+        },
+        {
+            'short': True,
+            'title': 'Priority',
+            'value': issue.priority
+        },
+        {
+            'short': True,
+            'title': 'State',
+            'value': issue.state
+        },
+    ]
     return resp
 
 def repo_push(data):
