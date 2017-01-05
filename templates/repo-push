@@ -1,4 +1,4 @@
-{{ user_link }} pushed {{data.push.changes[0].commits|length()}} changesets to [{{data.repository.name}}/{{data.push.changes[0].new.name}}]({{ data.push.changes[0].links.html.href }})
+{{ user_link }} pushed {{data.push.changes[0].commits|length()}} changesets to [{{data.push.changes[0].new.name}}]({{ data.push.changes[0].links.html.href }}) at [{{data.repository.full_name}}]({{ data.repository.links.html.href }})
 {% for commit in data.push.changes[0].commits %}
 - [{{commit.hash[:7]}}]({{commit.links.html.href}}): {{commit.message|trim()}}
 {% endfor %}
