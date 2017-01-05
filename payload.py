@@ -32,28 +32,10 @@ def issue_created(data):
     resp = set_author_infos(resp, data)
 
     issue = data.issue
-    resp['text'] = 'Opened issue [#%s: %s](%s):\n> %s' % (issue.id,
-                                                        issue.title,
-                                                        issue.links.html.href,
-                                                        issue.content.raw)
-
-    resp['fields'] = [
-        {
-            'short': True,
-            'title': 'Type',
-            'value': issue.type
-        },
-        {
-            'short': True,
-            'title': 'Priority',
-            'value': issue.priority
-        },
-        {
-            'short': True,
-            'title': 'State',
-            'value': issue.state
-        },
-    ]
+    template = 'Opened a %s %s [#%s: %s](%s) (%s):\n> %s'
+    resp['text'] = template % (issue.id, issue.priority, issue.type,
+                               issue.title, issue.links.html.href, issue.state,
+                               issue.content.raw)
 
     resp['color'] = _get_color_from_priority(issue.priority)
     return resp
@@ -63,28 +45,11 @@ def issue_updated(data):
     resp = set_author_infos(resp, data)
 
     issue = data.issue
-    resp['text'] = 'Updated issue [#%s: %s](%s):\n> %s' % (issue.id,
-                                                        issue.title,
-                                                        issue.links.html.href,
-                                                        issue.content.raw)
+    template = 'Updated a %s %s [#%s: %s](%s) (%s):\n> %s'
+    resp['text'] = template % (issue.id, issue.priority, issue.type,
+                               issue.title, issue.links.html.href, issue.state,
+                               issue.content.raw)
 
-    resp['fields'] = [
-        {
-            'short': True,
-            'title': 'Type',
-            'value': issue.type
-        },
-        {
-            'short': True,
-            'title': 'Priority',
-            'value': issue.priority
-        },
-        {
-            'short': True,
-            'title': 'State',
-            'value': issue.state
-        },
-    ]
     resp['color'] = _get_color_from_priority(issue.priority)
     return resp
 
