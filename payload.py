@@ -97,3 +97,18 @@ def repo_push(data):
     resp['text'] = template % (changesets, branch,
                                repo_link, '\n'.join(commits))
     return resp
+
+
+def pullrequest_created(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+
+    pr = data.pullrequest
+    pr_link = '[%s](%s)' % (pr.title, pr.links.html.href)
+    pr_src = '%s:%s' % (pr.source.repository.full_name, pr.source.branch.name)
+    pr_dst = '%s:%s' % (pr.destination.repository.full_name,
+                        pr.destination.branch.name)
+    template = 'Created pull request %s\nFrom %s to %s'
+    resp['text'] = template % (pr_link, pr_src, pr_dst)
+
+    return resp
