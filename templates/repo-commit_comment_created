@@ -1,2 +1,2 @@
-![]({{data.actor.links.avatar }}) {{ data.actor.username }} commented on #Blah
-> {{ data.comment.raw }}
+{{ user_link }} commented commit [#{{ data.comment.commit.hash }}]({{ data.comment.links.html.href }})
+> {{ data.comment.content.raw }}

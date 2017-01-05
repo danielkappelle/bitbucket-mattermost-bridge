@@ -14,6 +14,7 @@ import os.path
 
 #import user config
 import config
+from helpers import create_user_link
 
 # Initialize flask app
 app = Flask(__name__)
@@ -41,12 +42,13 @@ def bridgeHook(hook):
         template_file = template_folder + template_file_name
         if(os.path.exists(template_file)):
             # Parse the json data from the webhook
-	    data = Json(request.get_json())
+            data = Json(request.get_json())
+            user_link = create_user_link(data)
 
             # Read the template file and render it using the
             # data from the webhook
             template = Template(open(template_file, 'r').read())
-	    output = template.render(data=data)
+            output = template.render(data=data, user_link=user_link)
 
             # Submit the new, bridged, webhook to the mattermost
             # incoming webhook
@@ -55,7 +57,7 @@ def bridgeHook(hook):
         else:
             # In case there's no templat for the event
             # throw an error
-            return "Couldn't handle this event", HTTP_500_INTERNAL_SERVER_ERROR
+            return "Couldn't handle this event", 501
 
 def submitHook(url, hook_data):
     # This function submits the new hook to mattermost
