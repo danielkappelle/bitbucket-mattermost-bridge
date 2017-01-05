@@ -6,7 +6,7 @@ def _get_default_data():
                 'text': 'Not implemented'
     }
 
-def _get_color_from_priority(priority):
+def set_color_from_priority(priority):
     return {
         'trivial': '#205081',
         'minor': 'good',
@@ -27,6 +27,19 @@ def set_author_infos(resp, data):
 
     return resp
 
+def issue_comment_created(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+
+    issue = data.issue
+    template = 'Commented a %s %s [#%s: %s](%s) (%s)'
+    resp['text'] = template % (issue.priority, issue.type, issue.id,
+                               issue.title, issue.links.html.href, issue.state)
+
+    resp['color'] = set_color_from_priority(issue.priority)
+
+    return resp
+
 def issue_created(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
@@ -36,7 +49,7 @@ def issue_created(data):
     resp['text'] = template % (issue.priority, issue.type, issue.id,
                                issue.title, issue.links.html.href, issue.state)
 
-    resp['color'] = _get_color_from_priority(issue.priority)
+    resp['color'] = set_color_from_priority(issue.priority)
     return resp
 
 def issue_updated(data):
@@ -48,7 +61,7 @@ def issue_updated(data):
     resp['text'] = template % (issue.priority, issue.type, issue.id,
                                issue.title, issue.links.html.href, issue.state)
 
-    resp['color'] = _get_color_from_priority(issue.priority)
+    resp['color'] = set_color_from_priority(issue.priority)
     return resp
 
 def repo_push(data):
