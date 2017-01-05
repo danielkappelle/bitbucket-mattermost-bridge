@@ -1,2 +1,2 @@
 {{ user_link }} commented issue [#{{data.issue.id}}: {{data.issue.title}}]({{data.issue.links.html.href}})
-> {{data.issue.content.raw}}
+> {{data.comment.content.raw}}
