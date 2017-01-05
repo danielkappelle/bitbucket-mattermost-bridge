@@ -6,6 +6,7 @@ def _get_default_data():
                 'text': 'Not implemented'
     }
 
+
 def set_color_from_priority(priority):
     return {
         'trivial': '#205081',
@@ -14,6 +15,7 @@ def set_color_from_priority(priority):
         'critical': 'danger',
         'blocker': '#000000'
     }.get(priority, '#FFFFFF')
+
 
 def set_author_infos(resp, data):
     if data.actor.display_name == 'Anonymous':
@@ -26,6 +28,7 @@ def set_author_infos(resp, data):
     resp['author_link'] = data.actor.links.html.href
 
     return resp
+
 
 def set_issue(resp, data, action):
     template = '%s a %s %s [#%s: %s](%s) (%s)'
@@ -45,6 +48,7 @@ def issue_comment_created(data):
 
     return resp
 
+
 def issue_created(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
@@ -52,12 +56,14 @@ def issue_created(data):
 
     return resp
 
+
 def issue_updated(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
     resp = set_issue(resp, data, 'Updated')
 
     return resp
+
 
 def repo_push(data):
     resp = _get_default_data()
@@ -70,11 +76,10 @@ def repo_push(data):
     commits = []
     for commit in data.push.changes[0].commits:
         text = '- [%s](%s): %s' % (commit.hash[:7],
-                                 commit.links.html.href,
-                                 commit.message)
+                                   commit.links.html.href,
+                                   commit.message)
         commits.append(text)
-    resp['text'] = 'Pushed %s changesets to %s at %s\n> %s' % (changesets,
-                                                             branch,
-                                                             repo_link,
-                                                             '\n'.join(commits))
+    template = 'Pushed %s changesets to %s at %s\n> %s'
+    resp['text'] = template % (changesets, branch,
+                               repo_link, '\n'.join(commits))
     return resp
