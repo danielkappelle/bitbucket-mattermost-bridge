@@ -14,7 +14,7 @@ import os.path
 
 #import user config
 import config
-from helpers import create_user_link
+from helpers import create_user_link, create_repo_link
 
 # Initialize flask app
 app = Flask(__name__)
@@ -44,11 +44,14 @@ def bridgeHook(hook):
             # Parse the json data from the webhook
             data = Json(request.get_json())
             user_link = create_user_link(data)
+            repo_link = create_repo_link(data)
 
             # Read the template file and render it using the
             # data from the webhook
             template = Template(open(template_file, 'r').read())
-            output = template.render(data=data, user_link=user_link)
+            output = template.render(data=data,
+                                     user_link=user_link,
+                                     repo_link=repo_link)
 
             # Submit the new, bridged, webhook to the mattermost
             # incoming webhook

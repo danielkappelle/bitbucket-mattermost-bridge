@@ -4,3 +4,8 @@ def create_user_link(data):
     avatar = data.actor.links.avatar.href
 
     return '![](%s) [%s](%s)' % (avatar, username, userprofile)
+
+
+def create_repo_link(data):
+    return '[%s](%s)' % (data.repository.full_name,
+                         data.repository.links.html.href)
