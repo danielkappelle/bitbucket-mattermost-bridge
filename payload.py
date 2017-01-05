@@ -33,7 +33,7 @@ def issue_created(data):
 
     issue = data.issue
     template = 'Opened a %s %s [#%s: %s](%s) (%s):\n> %s'
-    resp['text'] = template % (issue.id, issue.priority, issue.type,
+    resp['text'] = template % (issue.priority, issue.type, issue.id,
                                issue.title, issue.links.html.href, issue.state,
                                issue.content.raw)
 
@@ -46,7 +46,7 @@ def issue_updated(data):
 
     issue = data.issue
     template = 'Updated a %s %s [#%s: %s](%s) (%s):\n> %s'
-    resp['text'] = template % (issue.id, issue.priority, issue.type,
+    resp['text'] = template % (issue.priority, issue.type, issue.id,
                                issue.title, issue.links.html.href, issue.state,
                                issue.content.raw)
 
