@@ -64,7 +64,11 @@ def bridgeHook(hook):
 
 def submitHook(url, hook_data):
     # This function submits the new hook to mattermost
-    data = {'text':hook_data}
+    data = {
+        'text':hook_data,
+        'username': config.username,
+        'icon_url': config.icon,
+    }
     
     # Post the webhook
     response = requests.post(
