@@ -27,41 +27,36 @@ def set_author_infos(resp, data):
 
     return resp
 
-def issue_comment_created(data):
-    resp = _get_default_data()
-    resp = set_author_infos(resp, data)
+def set_issue(resp, data, action):
+    template = '%s a %s %s [#%s: %s](%s) (%s)'
 
     issue = data.issue
-    template = 'Commented a %s %s [#%s: %s](%s) (%s)'
-    resp['text'] = template % (issue.priority, issue.type, issue.id,
+    resp['text'] = template % (action, issue.priority, issue.type, issue.id,
                                issue.title, issue.links.html.href, issue.state)
 
     resp['color'] = set_color_from_priority(issue.priority)
+    return resp
+
+
+def issue_comment_created(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+    resp = set_issue(resp, data, 'Commented')
 
     return resp
 
 def issue_created(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
+    resp = set_issue(resp, data, 'Opened')
 
-    issue = data.issue
-    template = 'Opened a %s %s [#%s: %s](%s) (%s)'
-    resp['text'] = template % (issue.priority, issue.type, issue.id,
-                               issue.title, issue.links.html.href, issue.state)
-
-    resp['color'] = set_color_from_priority(issue.priority)
     return resp
 
 def issue_updated(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
+    resp = set_issue(resp, data, 'Updated')
 
-    issue = data.issue
-    template = 'Updated a %s %s [#%s: %s](%s) (%s)'
-    resp['text'] = template % (issue.priority, issue.type, issue.id,
-                               issue.title, issue.links.html.href, issue.state)
-
-    resp['color'] = set_color_from_priority(issue.priority)
     return resp
 
 def repo_push(data):
