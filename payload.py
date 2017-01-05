@@ -6,6 +6,15 @@ def _get_default_data():
                 'text': 'Not implemented'
     }
 
+def _get_color_from_priority(priority):
+    return {
+        'trivial': '#205081',
+        'minor': 'good',
+        'major': 'warning',
+        'critical': 'danger',
+        'blocker': '#000000'
+    }.get(priority, '#FFFFFF')
+
 def set_author_infos(resp, data):
     if data.actor.display_name == 'Anonymous':
         resp['author_name'] = data.actor.display_name
@@ -45,6 +54,8 @@ def issue_created(data):
             'value': issue.state
         },
     ]
+
+    resp['color'] = _get_color_from_priority(issue.priority)
     return resp
 
 def issue_updated(data):
@@ -74,6 +85,7 @@ def issue_updated(data):
             'value': issue.state
         },
     ]
+    resp['color'] = _get_color_from_priority(issue.priority)
     return resp
 
 def repo_push(data):
