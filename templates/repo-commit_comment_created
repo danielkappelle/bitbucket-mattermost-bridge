@@ -1,2 +1,2 @@
-{{ user_link }} commented commit [#{{ data.comment.commit.hash }}]({{ data.comment.links.html.href }})
+{{ user_link }} commented commit [#{{ data.comment.commit.hash[:7] }}]({{ data.comment.links.html.href }})
 > {{ data.comment.content.raw }}
