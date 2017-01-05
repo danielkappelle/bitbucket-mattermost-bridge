@@ -9,7 +9,7 @@ def _get_default_data():
 def set_author_infos(resp, data):
     if data.actor.display_name == 'Anonymous':
         resp['author_name'] = data.actor.display_name
-        return
+        return resp
 
     resp['author_name'] = '%s (%s)' % (data.actor.display_name,
                                        data.actor.username)
