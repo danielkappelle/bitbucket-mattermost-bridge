@@ -6,12 +6,29 @@ def _get_default_data():
                 'text': 'Not implemented'
     }
 
-def repo_push(data):
-    resp = _get_default_data()
+def set_author_infos(resp, data):
     resp['author_name'] = '%s (%s)' % (data.actor.display_name,
                                        data.actor.username)
     resp['author_icon'] = data.actor.links.avatar.href
     resp['author_link'] = data.actor.links.html.href
+
+    return resp
+
+def issue_created(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+
+    issue = data.issue
+    resp['text'] = 'Opened issue [#%s: %s](%s):\n%s' % (issue.id,
+                                                        issue.title,
+                                                        issue.links.html.href,
+                                                        issue.content.raw)
+
+    return resp
+
+def repo_push(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
 
     changesets = len(data.push.changes[0].commits)
     repo_link = '[%s](%s)' % (data.repository.full_name,
