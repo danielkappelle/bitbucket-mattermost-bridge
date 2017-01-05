@@ -69,11 +69,12 @@ def repo_commit_comment_created(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
 
-    template = 'Commented commit #%s on %s at %s'
-    branch = data.push.changes[0].new.name
+    template = 'Commented commit #%s at %s'
+    commit_link = '[%s](%s)' % (data.comment.commit.hash[:7],
+                                data.comment.links.html.href)
     repo_link = '[%s](%s)' % (data.repository.full_name,
                               data.repository.links.html.href)
-    resp['text'] = template % (data.comment.commit.hash[:7], branch, repo_link)
+    resp['text'] = template % (commit_link, repo_link)
 
     return resp
 
