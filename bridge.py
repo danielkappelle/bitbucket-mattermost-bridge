@@ -40,7 +40,7 @@ def bridgeHook(hook):
         # that matches thee event-key, (: replaced by -), e.g.
         # repo-push
         payload_name = event.replace(":", "_")
-        payload_func = getattr(payload, payload_name)
+        payload_func = getattr(payload, payload_name, None)
 
         if payload_func:
             # Parse the json data from the webhook
@@ -58,10 +58,12 @@ def bridgeHook(hook):
 
 def submitHook(url, hook_data):
     # This function submits the new hook to mattermost
-
+    data = {
+        'attachments': [hook_data]
+    }
     # Post the webhook
     response = requests.post(
-            url, data=json.dumps(hook_data),
+            url, data=json.dumps(data),
                 headers={'Content-Type': 'application/json'}
                 )
     if response.status_code != 200:

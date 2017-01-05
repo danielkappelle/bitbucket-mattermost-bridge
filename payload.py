@@ -2,12 +2,8 @@
 
 def _get_default_data():
     return {
-        'attachments': [
-            {
                 'color': '#FFFFFF',
                 'text': 'Not implemented'
-            }
-        ]
     }
 
 def repo_push(data):
