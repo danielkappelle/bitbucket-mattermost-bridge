@@ -47,6 +47,35 @@ def issue_created(data):
     ]
     return resp
 
+def issue_updated(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+
+    issue = data.issue
+    resp['text'] = 'Updated issue [#%s: %s](%s):\n> %s' % (issue.id,
+                                                        issue.title,
+                                                        issue.links.html.href,
+                                                        issue.content.raw)
+
+    resp['fields'] = [
+        {
+            'short': True,
+            'title': 'Type',
+            'value': issue.type
+        },
+        {
+            'short': True,
+            'title': 'Priority',
+            'value': issue.priority
+        },
+        {
+            'short': True,
+            'title': 'State',
+            'value': issue.state
+        },
+    ]
+    return resp
+
 def repo_push(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
