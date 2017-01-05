@@ -14,7 +14,7 @@ import os.path
 
 #import user config
 import config
-from helpers import create_user_link, create_repo_link
+import payload
 
 # Initialize flask app
 app = Flask(__name__)
@@ -35,24 +35,16 @@ def bridgeHook(hook):
         # e.g. repo:push, issue:created, etc.
         event = request.headers.get('X-Event-Key')
 
+
         # The template folder is searched for a template file
         # that matches thee event-key, (: replaced by -), e.g.
         # repo-push
-        template_file_name = event.replace(":", "-")
-        template_file = template_folder + template_file_name
-        if(os.path.exists(template_file)):
+        payload_name = event.replace(":", "_")
+        payload_func = getattr(payload, payload_name)
+        if payload_func:
             # Parse the json data from the webhook
             data = Json(request.get_json())
-            user_link = create_user_link(data)
-            repo_link = create_repo_link(data)
-
-            # Read the template file and render it using the
-            # data from the webhook
-            template = Template(open(template_file, 'r').read())
-            output = template.render(data=data,
-                                     user_link=user_link,
-                                     repo_link=repo_link)
-
+            output = payload_func(data)
             # Submit the new, bridged, webhook to the mattermost
             # incoming webhook
             submitHook(config.webhook_url + hook, output)
@@ -60,14 +52,20 @@ def bridgeHook(hook):
         else:
             # In case there's no templat for the event
             # throw an error
+            print(event)
             return "Couldn't handle this event", 501
 
 def submitHook(url, hook_data):
     # This function submits the new hook to mattermost
     data = {
-        'text':hook_data,
-        'username': config.username,
-        'icon_url': config.icon,
+        'attachments': [
+            {
+                'color': '#FFFFFF',
+                'author_name': config.username,
+                'author_icon': config.icon,
+                'text': hook_data
+            }
+        ]
     }
     
     # Post the webhook
