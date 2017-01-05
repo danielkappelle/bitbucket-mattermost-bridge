@@ -23,7 +23,7 @@ def issue_created(data):
     resp = set_author_infos(resp, data)
 
     issue = data.issue
-    resp['text'] = 'Opened issue [#%s: %s](%s):\n%s' % (issue.id,
+    resp['text'] = 'Opened issue [#%s: %s](%s):\n> %s' % (issue.id,
                                                         issue.title,
                                                         issue.links.html.href,
                                                         issue.content.raw)
@@ -44,7 +44,7 @@ def repo_push(data):
                                  commit.links.html.href,
                                  commit.message)
         commits.append(text)
-    resp['text'] = 'Pushed %s changesets to %s at %s\n%s' % (changesets,
+    resp['text'] = 'Pushed %s changesets to %s at %s\n> %s' % (changesets,
                                                              branch,
                                                              repo_link,
                                                              '\n'.join(commits))
