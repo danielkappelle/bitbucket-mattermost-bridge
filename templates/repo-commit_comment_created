@@ -1,0 +1,2 @@
+![]({{data.actor.links.avatar }}) {{ data.actor.username }} commented on #Blah
+> {{ data.comment.raw }}
