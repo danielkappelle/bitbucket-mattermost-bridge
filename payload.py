@@ -7,6 +7,10 @@ def _get_default_data():
     }
 
 def set_author_infos(resp, data):
+    if data.actor.display_name == 'Anonymous':
+        resp['author_name'] = data.actor.display_name
+        return
+
     resp['author_name'] = '%s (%s)' % (data.actor.display_name,
                                        data.actor.username)
     resp['author_icon'] = data.actor.links.avatar.href
