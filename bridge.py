@@ -41,6 +41,7 @@ def bridgeHook(hook):
         # repo-push
         payload_name = event.replace(":", "_")
         payload_func = getattr(payload, payload_name)
+
         if payload_func:
             # Parse the json data from the webhook
             data = Json(request.get_json())
@@ -57,20 +58,10 @@ def bridgeHook(hook):
 
 def submitHook(url, hook_data):
     # This function submits the new hook to mattermost
-    data = {
-        'attachments': [
-            {
-                'color': '#FFFFFF',
-                'author_name': config.username,
-                'author_icon': config.icon,
-                'text': hook_data
-            }
-        ]
-    }
-    
+
     # Post the webhook
     response = requests.post(
-            url, data=json.dumps(data),
+            url, data=json.dumps(hook_data),
                 headers={'Content-Type': 'application/json'}
                 )
     if response.status_code != 200:
