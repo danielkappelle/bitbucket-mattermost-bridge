@@ -71,7 +71,7 @@ def repo_commit_comment_created(data):
 
     template = 'Commented commit %s at %s'
     commit_link = '[#%s](%s)' % (data.comment.commit.hash[:7],
-                                data.comment.links.html.href)
+                                 data.comment.links.html.href)
     repo_link = '[%s](%s)' % (data.repository.full_name,
                               data.repository.links.html.href)
     resp['text'] = template % (commit_link, repo_link)
@@ -110,11 +110,11 @@ def pullrequest_created(data):
     pr_dst_link = '%s/branch/%s' % (pr.destination.repository.links.html.href,
                                     pr.destination.branch.name)
     pr_src = '[%s:%s](%s)' % (pr.source.repository.full_name,
-                                        pr.source.branch.name,
-                                        pr_src_link)
+                              pr.source.branch.name,
+                              pr_src_link)
     pr_dst = '[%s:%s](%s)' % (pr.destination.repository.full_name,
-                                        pr.destination.branch.name,
-                                        pr_dst_link)
+                              pr.destination.branch.name,
+                              pr_dst_link)
     template = 'Open pull request %s\nFrom %s to %s'
     resp['text'] = template % (pr_link, pr_src, pr_dst)
 
