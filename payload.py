@@ -105,14 +105,16 @@ def pullrequest_created(data):
 
     pr = data.pullrequest
     pr_link = '[%s](%s)' % (pr.title, pr.links.html.href)
-    pr_src = '[%s:%s](%s/branch/%s)' % (pr.source.repository.full_name,
+    pr_src_link = '%s/branch/%s' % (pr.source.repository.links.html.href,
+                                    pr.srouce.branch.name)
+    pr_dst_link = '%s/branch/%s' % (pr.destination.repository.links.html.href,
+                                    pr.destination.branch.name)
+    pr_src = '[%s:%s](%s)' % (pr.source.repository.full_name,
                                         pr.source.branch.name,
-                                        pr.source.repository.links.html.href,
-                                        pr.source.branch.name)
-    pr_dst = '[%s:%s](%s/branch/%s)' % (pr.destination.repository.full_name,
+                                        pr_src_link)
+    pr_dst = '[%s:%s](%s)' % (pr.destination.repository.full_name,
                                         pr.destination.branch.name,
-                                        pr.destination.repository.links.html.href,
-                                        pr.destination.branch.name,)
+                                        pr_dst_link)
     template = 'Open pull request %s\nFrom %s to %s'
     resp['text'] = template % (pr_link, pr_src, pr_dst)
 
