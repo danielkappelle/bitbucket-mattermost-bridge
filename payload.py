@@ -86,7 +86,7 @@ def repo_push(data):
                                    commit.links.html.href,
                                    commit.message)
         commits.append(text)
-    template = 'Pushed %s changesets to %s at %s\n> %s'
+    template = 'Pushed %s changesets to %s at %s\n%s'
     resp['text'] = template % (changesets, branch,
                                repo_link, '\n'.join(commits))
     return resp
