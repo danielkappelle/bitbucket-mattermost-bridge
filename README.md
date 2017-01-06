@@ -11,13 +11,17 @@ This installation guide is based on `Ubuntu 14.04` with `Python 2.7` and `pip` i
 `$ pip install -r requirements.txt`
 
 ## Edit config
-Copy the config sample and edit
-
-`$ cp config.py.sample config.py`
-
+You can edit config to hardcode variable
 `$ vim config.py` or `$ nano config.py` (or whatever editor you prefer)
 
-Enter your hostname, port and the url to the mattermost instance
+Or you can use environment variables to set your bridge configuration.
+Here is the available variables:
+
+* MATTERMOST_HOOK (mandatory) : url to post bridged webhooks to
+* BRIDGE_LISTEN_ADDR : host the bridge is listening for, default: 0.0.0.0
+* BRIDGE_LISTEN_PORT : listening port, default 5000
+* MATTERMOST_USERNAME : Username showed in mattermost message (**Enable Overriding of Usernames from Webhooks** must be turned on mattermost)
+* MATTERMOST_ICON : User icon showed in mattermost message (**Enable Overriding of Icon from Webhooks** must be turned on mattermost)
 
 ## Run the bridge
 ### Directly
@@ -50,6 +54,11 @@ respawn
 You can now start/stop/restart the daemon using
 
 `$ sudo start|stop|restart bitbucket-mattermost-bridge`
+
+### With docker
+
+docker build -t bitbucket-mattermost-bridge .
+docker run -d -e MATTERMOST_HOOK=https://chat.example.com/hooks/ -p 5000:5000 bitbucket-mattermost-bridge
 
 # Trouble
 If there's any trouble, please contact me or create an issue
