@@ -141,3 +141,18 @@ def pullrequest_updated(data):
 def pullrequest_unapproved(data):
     resp = get_pullrequest(data, 'Unapproved')
     return resp
+
+
+def pullrequest_comment_created(data):
+    resp = get_pullrequest(data, 'Left a comment on the')
+    return resp
+
+
+def pullrequest_comment_updated(data):
+    resp = get_pullrequest(data, 'Updated a comment he left on the')
+    return resp
+
+
+def pullrequest_comment_deleted(data):
+    resp = get_pullrequest(data, 'Deleted a comment he left on the')
+    return resp
