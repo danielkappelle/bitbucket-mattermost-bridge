@@ -57,8 +57,10 @@ You can now start/stop/restart the daemon using
 
 ### With docker
 
+```
 docker build -t bitbucket-mattermost-bridge .
 docker run -d -e MATTERMOST_HOOK=https://chat.example.com/hooks/ -p 5000:5000 bitbucket-mattermost-bridge
+```
 
 # Trouble
 If there's any trouble, please contact me or create an issue
