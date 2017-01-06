@@ -30,7 +30,9 @@ def set_author_infos(resp, data):
     return resp
 
 
-def set_issue(resp, data, action):
+def get_issue(data, action):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
     template = '%s a %s %s [#%s: %s](%s) (%s)'
 
     issue = data.issue
@@ -42,26 +44,17 @@ def set_issue(resp, data, action):
 
 
 def issue_comment_created(data):
-    resp = _get_default_data()
-    resp = set_author_infos(resp, data)
-    resp = set_issue(resp, data, 'Commented')
-
+    resp = get_issue(data, 'Commented')
     return resp
 
 
 def issue_created(data):
-    resp = _get_default_data()
-    resp = set_author_infos(resp, data)
-    resp = set_issue(resp, data, 'Opened')
-
+    resp = get_issue(data, 'Opened')
     return resp
 
 
 def issue_updated(data):
-    resp = _get_default_data()
-    resp = set_author_infos(resp, data)
-    resp = set_issue(resp, data, 'Updated')
-
+    resp = get_issue(data, 'Updated')
     return resp
 
 
@@ -99,7 +92,7 @@ def repo_push(data):
     return resp
 
 
-def pullrequest_created(data):
+def get_pullrequest(data, action):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
 
@@ -115,7 +108,36 @@ def pullrequest_created(data):
     pr_dst = '[%s:%s](%s)' % (pr.destination.repository.full_name,
                               pr.destination.branch.name,
                               pr_dst_link)
-    template = 'Open pull request %s\nFrom %s to %s'
-    resp['text'] = template % (pr_link, pr_src, pr_dst)
+    template = '%s pull request %s\nFrom %s to %s'
+    resp['text'] = template % (action, pr_link, pr_src, pr_dst)
 
+    return resp
+
+
+def pullrequest_approved(data):
+    resp = get_pullrequest(data, 'Approved')
+    return resp
+
+
+def pullrequest_created(data):
+    resp = get_pullrequest(data, 'Opened')
+    return resp
+
+
+def pullrequest_fulfilled(data):
+    resp = get_pullrequest(data, 'Merged')
+    return resp
+
+
+def pullrequest_rejected(data):
+    resp = get_pullrequest(data, 'Rejected')
+    return resp
+
+
+def pullrequest_updated(data):
+    resp = get_pullrequest(data, 'Updated')
+    return resp
+
+def pullrequest_unapproved(data):
+    resp = get_pullrequest(data, 'Unapproved')
     return resp
