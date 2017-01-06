@@ -85,6 +85,16 @@ def repo_fork(data):
     return resp
 
 
+def repo_updated(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+    repo_link = '[%s](%s)' % (data.repository.full_name,
+                              data.repository.links.html.href)
+
+    resp['text'] = 'Updated repo %s' % repo_link
+    return resp
+
+
 def repo_push(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
