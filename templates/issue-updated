@@ -1,2 +1,0 @@
-{{ user_link }} updated issue [#{{data.issue.id}}: {{data.issue.title}}]({{data.issue.links.html.href}})
-> {{data.issue.content.raw}}
