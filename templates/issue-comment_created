@@ -1,3 +1,0 @@
-[{{data.repository.full_name}}] Comment from [{{data.actor.username}}]({{data.actor.links.html.href}})
-[#{{data.issue.id}}: {{data.issue.title}}]({{data.issue.links.html.href}})
-{{data.comment.content.raw}}

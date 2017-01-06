@@ -1,3 +1,0 @@
-[{{data.repository.full_name}}] Issue updated by [{{data.issue.reporter.username}}]({{data.issue.reporter.links.html.href}})
-[#{{data.issue.id}}: {{data.issue.title}}]({{data.issue.links.html.href}})
-{{data.issue.content.raw}}

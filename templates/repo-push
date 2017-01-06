@@ -1,5 +1,0 @@
-[{{data.repository.full_name}}/{{data.push.changes[0].new.name}}] {{data.push.changes[0].commits|length()}} commits pushed by {{data.actor.username}}
-{% for commit in data.push.changes[0].commits %}
-- [`{{commit.hash[:7]}}`]({{commit.links.html.href}}) {{commit.message|trim()}} - {{commit.author.user.username}}
-{% endfor %}
-
