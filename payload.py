@@ -104,8 +104,8 @@ def repo_commit_status_created(data):
     resp = _get_default_data()
     resp = _set_author_infos(resp, data)
 
-    ci_link = '[%s](%s)' % (data.commit_status.name, data.commit_status.url)
-    resp['text'] = 'Launch CI build: %s' % ci_link
+    ci_link = '[%s](%s)' % (data.commit_status.key, data.commit_status.url)
+    resp['text'] = 'Launch CI build on %s' % ci_link
 
     return resp
 
@@ -114,8 +114,8 @@ def repo_commit_status_updated(data):
     resp = _get_default_data()
     resp = _set_author_infos(resp, data)
 
-    ci_link = '[%s](%s)' % (data.commit_status.name, data.commit_status.url)
-    resp['text'] = 'CI build: %s is %s' % (ci_link, data.commit_status.state)
+    ci_link = '[%s](%s)' % (data.commit_status.key, data.commit_status.url)
+    resp['text'] = 'CI build on %s is finished' % ci_link
     resp['color'] = _set_color_from_state(data.commit_status.state)
 
     return resp
