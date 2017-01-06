@@ -72,6 +72,19 @@ def repo_commit_comment_created(data):
     return resp
 
 
+def repo_fork(data):
+    resp = _get_default_data()
+    resp = set_author_infos(resp, data)
+
+    template = 'Forked %s to %s'
+    src_link = '[%s](%s)' % (data.repository.full_name,
+                             data.repository.links.html.href)
+    dst_link = '[%s](%s)' % (data.fork.full_name, data.fork.links.html.href)
+    resp['text'] = template % (src_link, dst_link)
+
+    return resp
+
+
 def repo_push(data):
     resp = _get_default_data()
     resp = set_author_infos(resp, data)
@@ -137,6 +150,7 @@ def pullrequest_rejected(data):
 def pullrequest_updated(data):
     resp = get_pullrequest(data, 'Updated')
     return resp
+
 
 def pullrequest_unapproved(data):
     resp = get_pullrequest(data, 'Unapproved')
